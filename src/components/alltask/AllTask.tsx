@@ -8,7 +8,7 @@ import { ContextData } from "@/context/ContextProvider";
 const AllTask: React.FC = () => {
   return (
     <>
-        <Cards />
+      <Cards />
       <InputData />
     </>
   );
