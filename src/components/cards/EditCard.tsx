@@ -27,7 +27,6 @@ const EditCard: React.FC<{
       console.log("API response:", response);
       const savedTask = response.data;
       onSave(savedTask); 
-      console.log("-------------------:");
     } catch (error) {
       console.error('Error updating task:', error);
     }

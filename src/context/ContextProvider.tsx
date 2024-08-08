@@ -7,6 +7,7 @@ import React, {
   useEffect,
 } from "react";
 import { logout as apiLogout } from "@/api/user";
+import { getTasks } from "@/api/task";
 export interface Task {
   _id: string;
   title: string;
@@ -24,6 +25,7 @@ type ContextDataType = {
   logout: () => void;
   tasks: Task[];
   setTasks: Dispatch<SetStateAction<Task[]>>;
+  tasksCount:number;
 };
 
 export const ContextData = createContext<ContextDataType>({
@@ -37,6 +39,7 @@ export const ContextData = createContext<ContextDataType>({
   logout: () => {},
   tasks: [],
   setTasks: () => {},
+  tasksCount:0
 });
 
 export default function RootLayout({
@@ -48,15 +51,30 @@ export default function RootLayout({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasksCount,setTasksCount] = useState(0)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
+    if (token) {
+      setIsLoggedIn(true);
+      fetchTasks(token); 
+    }
   }, []);
 
-  const login = (token: string) => {
+  const fetchTasks = async (token: string) => {
+    try {
+      const response = await getTasks(token);
+      setTasks(response.data);
+      setTasksCount(response.count)
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+
+  const login = async (token: string) => {
     localStorage.setItem("token", token);
     setIsLoggedIn(true);
+    await fetchTasks(token);
   };
 
   const logout = async () => {
@@ -64,11 +82,12 @@ export default function RootLayout({
     if (token) {
       try {
         await apiLogout(token);
-        localStorage.removeItem("token");
-        setIsLoggedIn(false);
       } catch (error: any) {
         console.error("Logout failed:", error.message);
       }
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      setTasks([]);
     }
   };
   const ContextDataValue = {
@@ -82,6 +101,7 @@ export default function RootLayout({
     logout,
     tasks,
     setTasks,
+    tasksCount
   };
 
   return (

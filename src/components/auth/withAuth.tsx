@@ -14,7 +14,7 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): Compone
     }, [isLoggedIn, router]);
 
     if (!isLoggedIn) {
-      return null; // or a loading spinner
+      return null; 
     }
 
     return <WrappedComponent {...props} />;

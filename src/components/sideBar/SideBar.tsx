@@ -2,22 +2,19 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
-import { CgNotes } from "react-icons/cg";
-import { FaCheckDouble } from "react-icons/fa";
 import { MdLabelImportant } from "react-icons/md";
-import { TbNotebookOff } from "react-icons/tb";
 import { ContextData } from "@/context/ContextProvider";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi"; 
 import { getUserProfile } from "@/api/user";
 function SideBar() {
-  const { setInputDiv,logout } = useContext(ContextData);
+  const { setInputDiv,logout,tasksCount } = useContext(ContextData);
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true); 
   const [profile, setProfile] = useState<{ firstName: string; lastName: string; email: string } | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+    const token = localStorage.getItem('token'); 
 
     if (token) {
         getUserProfile(token)
@@ -57,7 +54,7 @@ const handleLogOut = async () => {
         <ul className="flex flex-col items-center w-full">
           <li className="my-2 flex items-center gap-2 p-2 rounded cursor-pointer transition-colors">
             <MdLabelImportant />
-            Total tasks {" "}: {" "} 0
+            Total tasks {" "}: {" "} {tasksCount}
           </li>
         </ul>
         <div className="flex justify-end items-center px-3 py-1 border-2 rounded-xl">

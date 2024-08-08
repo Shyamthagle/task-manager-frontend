@@ -1,17 +1,18 @@
 import { ContextData } from "@/context/ContextProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import { createTask, getTasks } from "@/api/task"; // Import the createTask function from your API utility
+import { createTask, getTasks } from "@/api/task"; 
 import { useRouter } from "next/navigation";
 
 const InputData: React.FC = () => {
-  const { setInputDiv, inputDiv, setTasks } = useContext(ContextData);
+  const { setInputDiv, inputDiv, setTasks ,} = useContext(ContextData);
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     completed: true,
   });
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -25,8 +26,13 @@ const InputData: React.FC = () => {
   };
 
   async function createUserTask() {
+    const token = localStorage.getItem("token"); 
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
     try {
-      const response = await createTask(formData);
+      const response = await createTask(formData,token);
       setTasks((prevTasks) => [...prevTasks, response.data]);
       setInputDiv("hidden");
       setFormData({ title: "", description: "", completed: true });

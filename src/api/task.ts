@@ -9,9 +9,13 @@ interface TaskData {
     
 }
 
-export const createTask = async (taskData: TaskData) => {
+export const createTask = async (taskData: TaskData, token: string) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/task`, taskData);
+    const response = await axios.post(`${API_BASE_URL}/task`, taskData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error: any) {
     console.error('Create task error:', error);
@@ -29,9 +33,13 @@ export const updateTask = async (taskId: string, taskData: TaskData) => {
   }
 };
     
-export const getTasks = async () => {
+export const getTasks = async (token?: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/task`);
+    const response = await axios.get(`${API_BASE_URL}/task`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error: any) {
     console.error('Get tasks error:', error);

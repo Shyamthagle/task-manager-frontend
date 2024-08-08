@@ -16,7 +16,7 @@ const [error, setError] = useState("");
 const handleLogin = async () => {
   try {
     const { token } = await loginAPI({ email, password });
-    login(token); // Update context with token
+    login(token); 
     router.push("/");
   } catch (err) {
     if (err instanceof Error) {
