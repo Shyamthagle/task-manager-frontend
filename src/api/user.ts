@@ -2,7 +2,6 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-// const API_BASE_URL = "http://65.0.131.234:8000";
 
 
 interface SignupData {
