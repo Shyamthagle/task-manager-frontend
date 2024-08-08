@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import { getTasks, updateTask, deleteTask } from "@/api/task";
 
 const Cards: React.FC = () => {
-  const { tasks, setTasks, setInputDiv, isLoading, setIsLoading } =
+  const { tasks, setTasks, setInputDiv, isLoading, setIsLoading,setTasksCount } =
     useContext(ContextData);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -81,6 +81,7 @@ const Cards: React.FC = () => {
       setTasks((prevTasks) =>
         prevTasks.filter((item) => item._id !== task._id)
       );
+      setTasksCount((prevCount) => prevCount - 1);
     } catch (error) {
       console.error("Error deleting task:", error);
     }

@@ -26,6 +26,7 @@ type ContextDataType = {
   tasks: Task[];
   setTasks: Dispatch<SetStateAction<Task[]>>;
   tasksCount:number;
+  setTasksCount:Dispatch<SetStateAction<number>>;
 };
 
 export const ContextData = createContext<ContextDataType>({
@@ -39,7 +40,8 @@ export const ContextData = createContext<ContextDataType>({
   logout: () => {},
   tasks: [],
   setTasks: () => {},
-  tasksCount:0
+  tasksCount:0,
+  setTasksCount:() => {},
 });
 
 export default function RootLayout({
@@ -101,7 +103,8 @@ export default function RootLayout({
     logout,
     tasks,
     setTasks,
-    tasksCount
+    tasksCount,
+    setTasksCount
   };
 
   return (

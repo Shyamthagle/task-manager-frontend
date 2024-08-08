@@ -5,7 +5,7 @@ import { createTask, getTasks } from "@/api/task";
 import { useRouter } from "next/navigation";
 
 const InputData: React.FC = () => {
-  const { setInputDiv, inputDiv, setTasks ,} = useContext(ContextData);
+  const { setInputDiv, inputDiv, setTasks ,setTasksCount} = useContext(ContextData);
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
@@ -34,6 +34,7 @@ const InputData: React.FC = () => {
     try {
       const response = await createTask(formData,token);
       setTasks((prevTasks) => [...prevTasks, response.data]);
+      setTasksCount((prevCount) => prevCount + 1); 
       setInputDiv("hidden");
       setFormData({ title: "", description: "", completed: true });
       router.push("/");
