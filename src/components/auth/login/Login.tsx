@@ -6,14 +6,15 @@ import { useContext, useState } from "react";
 import { login as loginAPI } from "@/api/user";
 
 const Login = () => {
-  const { login } = useContext(ContextData);
+const { login } = useContext(ContextData);
 const router = useRouter()
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
 
 
-const handleLogin = async () => {
+const handleLogin = async (event:React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
   try {
     const { token } = await loginAPI({ email, password });
     login(token); 
@@ -31,6 +32,7 @@ const handleLogin = async () => {
     <div className="md:w-2/6 p-4 rounded bg-gray-800">
       <div className="text-2xl font-semibold">LogIn</div>
       {error && <div className="text-red-500">{error}</div>}
+      <form onSubmit={handleLogin}>
       <input
         type="text"
         name="email"
@@ -49,7 +51,7 @@ const handleLogin = async () => {
       />
       <div className="w-full flex items-center justify-between">
         <button
-          onClick={handleLogin}
+          type="submit"
           className="bg-blue-400 px-3 py-2 rounded text-black font-semibold"
         >
           LogIn
@@ -61,6 +63,7 @@ const handleLogin = async () => {
           Don&apos;t have an account?
         </Link>
       </div>
+      </form>
       <div className="mt-2 text-end">
         <Link
           href="./forgot-password"

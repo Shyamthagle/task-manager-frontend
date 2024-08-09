@@ -22,7 +22,8 @@ const Signup = () => {
     });
   };
 
-  const handelSignUp = async () => {
+  const handelSignUp = async (event:React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       await signup(formData);
       router.push("/login");
@@ -36,6 +37,7 @@ const Signup = () => {
       <div className="md:w-2/6 p-4 rounded bg-gray-800">
         <div className="text-2xl font-semibold">Signup</div>
         {error && <div className="text-red-500 my-2">{error}</div>}
+        <form onSubmit={handelSignUp}>
         <input
           type="text"
           name="firstName"
@@ -77,7 +79,7 @@ const Signup = () => {
           className="bg-gray-700 px-3 py-2 my-3 w-full rounded"
         />
         <div className="w-full flex items-center justify-between gap-8">
-          <button onClick={handelSignUp} className="bg-blue-400 text-xl px-3 py-2 rounded text-black font-semibold">
+          <button  type="submit" className="bg-blue-400 text-xl px-3 py-2 rounded text-black font-semibold">
             SignUp
           </button>
           <Link
@@ -87,6 +89,7 @@ const Signup = () => {
             Already have an account?
           </Link>
         </div>
+        </form>
       </div>
     </div>
   );
