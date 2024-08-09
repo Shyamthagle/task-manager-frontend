@@ -58,7 +58,7 @@ const handleLogin = async () => {
           href="./signup"
           className="text-sm text-gray-400 hover:text-gray-200"
         >
-          Don't have an account?
+          Don&apos;t have an account?
         </Link>
       </div>
       <div className="mt-2 text-end">
