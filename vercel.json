@@ -1,0 +1,13 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/task/:path*",
+        "destination": "http://13.201.88.151:8000/task/:path*"
+      },
+      {
+        "source": "/api/user/:path*",
+        "destination": "http://13.201.88.151:8000/user/:path*"
+      }
+    ]
+  }
+  
